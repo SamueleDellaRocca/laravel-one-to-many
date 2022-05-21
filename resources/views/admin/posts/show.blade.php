@@ -13,8 +13,10 @@
                 <h3>Phone: {{ $post->user->infouser->phone }} </h3>
                 <p>{{ $post->content }}</p>
                 <div class="d-flex justify-content-end w-100 mb-3 gap-3">
-                    <a class="btn btn-success text-white" href="{{ route('admin.posts.edit', $post->slug) }}">EDIT</a>
-                    <button class="btn btn-danger btn_delete text-white">DELETE</button>
+                    @if (Auth::user()->id === $post->user_id)
+                        <a class="btn btn-success text-white" href="{{ route('admin.posts.edit', $post->slug) }}">EDIT</a>
+                        <button class="btn btn-danger btn_delete text-white">DELETE</button>
+                    @endif
                 </div>
             </div>
         </div>

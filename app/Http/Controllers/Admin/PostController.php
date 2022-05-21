@@ -33,6 +33,13 @@ class PostController extends Controller
         ];
     }
 
+    public function myindex()
+    {
+        $posts = Post::where('user_id', Auth::user()->id)->paginate(25);
+
+        return view('admin.posts.index', compact('posts'));
+    }
+
 
     public function index()
     {
