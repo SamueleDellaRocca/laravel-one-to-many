@@ -8,7 +8,7 @@
     <div class="container">
         <div class="row">
             <div class="card col-6">
-                <h1>{{ $post->title }}</h1>
+                <h1 class="text-danger">{{ $post->title }}</h1>
                 <h2>Author:{{ $post->user->name }} </h2>
                 <h3>Phone: {{ $post->user->infouser->phone }} </h3>
                 <p>{{ $post->content }}</p>
