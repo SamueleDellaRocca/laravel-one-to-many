@@ -11,6 +11,8 @@
                 <h1 class="text-danger">{{ $post->title }}</h1>
                 <h2>Author:{{ $post->user->name }} </h2>
                 <h3>Phone: {{ $post->user->infouser->phone }} </h3>
+                <h4>Categoria: {{ $post->category->name }} </h4>
+
                 <p>{{ $post->content }}</p>
                 <div class="d-flex justify-content-end w-100 mb-3 gap-3">
                     @if (Auth::user()->id === $post->user_id)

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Post;
+use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +30,8 @@ class PostController extends Controller
                 Rule::unique('posts')->ignore($model),
                 'max:100'
             ],
-            'content'   => 'required'
+            'content'   => 'required',
+            'category_id'  => 'required|exists:App\Category,id',
         ];
     }
 
@@ -54,8 +56,9 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('admin.posts.create');
+    {   
+        $categories = Category::all();
+        return view('admin.posts.create', compact('categories'));
     }
 
     /**
