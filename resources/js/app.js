@@ -34,6 +34,24 @@ const app = new Vue({
 
 
 
+const btnSlugger = document.querySelector('#btn-slugger');
+if (btnSlugger) {
+    btnSlugger.addEventListener('click', function () {
+        const eleSlug = document.querySelector('#slug');
+        const title = document.querySelector('#title').value;
+
+        Axios.post('/admin/slugger', {
+            originalStr: title,
+        })
+            .then(function (response) {
+                eleSlug.value = response.data.slug;
+            })
+    });
+}
+
+
+
+
 const overlay = document.querySelector('.overlay');
 if (overlay) {
     const form = overlay.querySelector('.form');
