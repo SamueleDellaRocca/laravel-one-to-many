@@ -29,7 +29,7 @@
                 <select class="custom-select input-group-text w-100 text-start" id="category_id" name="category_id">
                     <option selected>Scegli una categoria</option>
                     @foreach ($categories as $category)
-                        <option value="{{ $category->id }}"> {{ $category->name }}</option>
+                        <option value="{{ old($category->id) }}"> {{ $category->name }}</option>
                     @endforeach
                 </select>
                 @error('category_id')
