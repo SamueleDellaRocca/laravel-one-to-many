@@ -40105,6 +40105,9 @@ module.exports = function(module) {
 var _require = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"),
     Axios = _require["default"];
 
+var _require2 = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js"),
+    get = _require2.get;
+
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
@@ -40128,7 +40131,7 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
 var app = new Vue({
   el: '#app'
 });
-var btnSlugger = document.querySelector('.btn-slugger');
+var btnSlugger = document.querySelector('#btn-slugger');
 
 if (btnSlugger) {
   btnSlugger.addEventListener('click', function () {
@@ -40139,6 +40142,8 @@ if (btnSlugger) {
     }).then(function (response) {
       eleSlug.value = response.data.slug;
     });
+    console.log(originalStr);
+    console.log(eleSlug);
   });
 }
 

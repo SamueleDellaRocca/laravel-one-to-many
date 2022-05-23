@@ -26,11 +26,9 @@ class HomeController extends Controller
     {
         return view('admin.home');
     }
-
-    public function slugger(Request $request)
-    {
+    public function slugger(Request $request) {
         return response()->json([
-            'slug' => Post::createSlug($request->all()['originalStr'])
+            'slug' => Post::generateSlug($request->all()['originalStr'])
         ]);
     }
 }

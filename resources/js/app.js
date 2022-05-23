@@ -4,6 +4,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 const { default: Axios } = require('axios');
+const { get } = require('lodash');
 require('./bootstrap');
 
 window.Vue = require('vue');
@@ -32,7 +33,7 @@ const app = new Vue({
 });
 
 
-const btnSlugger = document.querySelector('.btn-slugger');
+const btnSlugger = document.querySelector('#btn-slugger');
 if (btnSlugger) {
     btnSlugger.addEventListener('click', function () {
         const eleSlug = document.querySelector('#slug');
@@ -44,6 +45,9 @@ if (btnSlugger) {
             .then(function (response) {
                 eleSlug.value = response.data.slug;
             })
+
+        console.log(originalStr);
+        console.log(eleSlug);
     });
 }
 
