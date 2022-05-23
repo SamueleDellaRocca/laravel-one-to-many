@@ -20,7 +20,7 @@
                 <label for="slug">Slug</label>
                 <input type="text" class="form-control mb-2" id="slug" name="slug" placeholder="Slug"
                     value="{{ old('slug') }}">
-                <input type="button" value="Generate slug" id="btn-slugger" class="btn btn-primary">
+                <input type="button" value="Generate slug" class="btn btn-primary btn-slugger">
                 @error('slug')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
