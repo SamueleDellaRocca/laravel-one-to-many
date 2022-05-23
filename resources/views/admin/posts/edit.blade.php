@@ -25,6 +25,17 @@
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
+            <div class="input-group mb-3">
+                <select class="custom-select input-group-text w-100 text-start" id="category_id" name="category_id">
+                    <option selected>Scegli una categoria</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}"> {{ $category->name }}</option>
+                    @endforeach
+                </select>
+                @error('category_id')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
             <div class="form-group mb-4">
                 <label for="content">Content</label>
                 <textarea class="form-control mb-2" id="content" name="content" placeholder="Content"

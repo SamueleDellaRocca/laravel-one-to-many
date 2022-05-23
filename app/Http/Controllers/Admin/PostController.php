@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Post;
 use App\Category;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
@@ -35,19 +36,62 @@ class PostController extends Controller
         ];
     }
 
-    public function myindex()
+    public function myindex(Request $request)
     {
         $posts = Post::where('user_id', Auth::user()->id)->paginate(25);
+        // $posts = Post::where('id', '>', 0);
 
-        return view('admin.posts.index', compact('posts'));
+        if ($request->s) {
+            $posts->where('title', 'LIKE', "%$request->s%");
+        }
+        if ($request->category) {
+            $posts->where('category_id', $request->category);
+        }
+        if ($request->author) {
+            $posts->where('user_id', $request->author);
+        }
+
+        $categories = Category::all();
+        $users = User::all();
+
+        $data = [
+            'posts'         => $posts,
+            'categories'    => $categories,
+            'users'         => $users,
+            'request'       => $request
+        ];
+
+        return view('admin.posts.index', $data);
     }
 
 
-    public function index()
+    public function index(Request $request)
     {
+        $posts = Post::where('id', '>', 0);
         $posts = Post::paginate(25);
 
-        return view('admin.posts.index', compact('posts'));
+        if ($request->s) {
+            $posts->where('title', 'LIKE', "%$request->s%");
+        }
+        if ($request->category) {
+            $posts->where('category_id', $request->category);
+        }
+        if ($request->author) {
+            $posts->where('user_id', $request->author);
+        }
+
+
+        $categories = Category::all();
+        $users = User::all();
+
+        $data = [
+            'posts'         => $posts,
+            'categories'    => $categories,
+            'users'         => $users,
+            'request'       => $request
+        ];
+
+        return view('admin.posts.index', $data);
     }
 
     /**
@@ -97,9 +141,17 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Post $post)
-    {
+    {   
+        $categories = Category::all();
+
         if (Auth::user()->id !== $post->user_id) abort(403);
-        return view('admin.posts.edit', compact('post'));
+
+        $data = [
+            'post' => $post,
+            'categories' => $categories,
+        ];
+
+        return view('admin.posts.edit', $data);
     }
 
     /**
