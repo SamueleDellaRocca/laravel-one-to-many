@@ -16,7 +16,7 @@ class Post extends Model
 
 
     static public function generateSlug($originalStr) {
-        $baseSlug = Str::of($originalStr)->slug('-');
+        $baseSlug = Str::of($originalStr)->slug('-').'';
         $slug = $baseSlug;
         $_i = 1;
         while(self::where('slug', $slug)->first()) {
