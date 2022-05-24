@@ -67,9 +67,8 @@ class PostController extends Controller
 
     public function index(Request $request)
     {
-        $posts = Post::where('id', '>', 0);
-        $posts = Post::paginate(25);
-
+        $posts = Post::where('1 = 1');
+        
         if ($request->s) {
             $posts->where('title', 'LIKE', "%$request->s%");
         }
@@ -79,8 +78,9 @@ class PostController extends Controller
         if ($request->author) {
             $posts->where('user_id', $request->author);
         }
-
-
+        
+        
+        $posts = Post::paginate(25);
         $categories = Category::all();
         $users = User::all();
 

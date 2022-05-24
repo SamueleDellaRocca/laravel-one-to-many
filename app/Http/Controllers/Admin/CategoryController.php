@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
 use App\Category;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+
 
 class CategoryController extends Controller
 {
@@ -12,9 +14,24 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    private function getValidators($model) {
+        return [
+            'name' => [
+                'required',
+                Rule::unique('categories')->ignore($model),
+                'max:50'
+            ],
+            'dedscription' => 'max:255',
+            
+        ];
+    }
+
     public function index()
     {
-        //
+        $categories = Category::all();
+
+        return view('admin.categories.index', compact('categories'));
     }
 
     /**
@@ -24,7 +41,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.categories.create');
     }
 
     /**
@@ -35,7 +52,13 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate($this->getValidators(null));
+
+        $formData = $request->all();
+
+        $category = Category::create($formData);
+
+        return redirect()->route('admin.categories.show', $category->id);
     }
 
     /**
@@ -46,7 +69,8 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        return view('admin.categories.show', compact('category') );
+        
     }
 
     /**
@@ -56,8 +80,8 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Category $category)
-    {
-        //
+    {   
+        return view('admin.categories.edit', compact('category'));
     }
 
     /**
@@ -69,7 +93,9 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $request->validate($this->getValidators($category));
+        $category->update($request->all());
+        return redirect()->route('admin.categories.show', $category->id);
     }
 
     /**
@@ -80,6 +106,10 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->posts()->detach('category_id');
+
+        $category->delete();
+
+        return redirect()->route('admin.categories.index');
     }
 }
